@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Téléchargeur MP3/MP4</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+  <div class="container">
+    <h1>Téléchargeur MP3/MP4</h1>
+    <input type="text" id="searchInput" placeholder="Coller un lien YouTube">
+
+    <div class="buttons">
+      <button onclick="realDownload('mp3')" class="btn blue">Télécharger MP3</button>
+      <button onclick="realDownload('mp4')" class="btn green">Télécharger MP4</button>
+    </div>
+
+    <p id="status" class="status"></p>
+  </div>
+
+  <script>
+    
+  function isValidYouTubeUrl(url) {
+  try {
+    const parsedUrl = new URL(url);
+    const hostname = parsedUrl.hostname;
+    const videoId = parsedUrl.searchParams.get("v");
+
+    return (
+      (hostname.includes("youtube.com") || hostname.includes("youtu.be")) &&
+      videoId && videoId.length === 11
+    );
+  } catch (e) {
+    return false;
+  }
+}
+
+
+    
+async function realDownload(format) {
+ const query = document.getElementById("searchInput").value.trim();
+ const status = document.getElementById("status");
+
+ if (!query) {
+ alert("Veuillez entrer un lien.");
+ return;
+ }
+
+ if (!isValidYouTubeUrl(query)) {
+ status.className = "status error";
+ status.innerText = "❌ Lien invalide. Veuillez entrer un lien YouTube valide.";
+ return;
+ }
+
+ const formData = new FormData();
+ formData.append("url", query);
+ formData.append("format", format);
+
+ status.className = "status";
+ status.innerText = `⏳ Conversion en cours...`;
+
+ try {
+ const response = await fetch("/download", {
+ method: "POST",
+ body: formData
+ });
+
+const downloadUrl = await response.text();
+
+if (!response.ok) {
+  status.className = "status error";
+  status.innerText = "❌ " + downloadUrl;
+  return;
+}
+
+ const a = document.createElement("a");
+ a.href = downloadUrl;
+ a.download = "";
+ document.body.appendChild(a);
+ a.click();
+ document.body.removeChild(a);
+
+ status.innerText = "✅ Téléchargement lancé.";
+ } catch (error) {
+ status.innerText = "❌ Erreur lors du téléchargement.";
+ }
+ }
+</script>
+
+  </script>
+  <footer style="margin-top: 2rem; text-align: center; font-size: 0.9rem; color: #6b7280;">
+  &copy; 2025 Semah Zheni — <a href="mailto:semahzheni@yahoo.com" style="color: rgb(16, 114, 82);"><i class="fas fa-envelope"></i> semahzheni@yahoo.com</a>
+  </footer>
+
+</body>
+</html>
