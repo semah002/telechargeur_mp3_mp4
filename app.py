@@ -53,6 +53,7 @@ def download():
                 'preferredquality': '192',
             }],
             'quiet': True,
+            'cookiefile': 'cookies.txt',
             'http_headers': {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
 
@@ -68,6 +69,7 @@ def download():
                 'preferedformat': 'mp4',
             }],
             'quiet': True,
+            'cookiefile': 'cookies.txt',
             'http_headers': {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
             }
