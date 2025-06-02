@@ -1,24 +1,21 @@
+FROM jrottenberg/ffmpeg:4.4-ubuntu
 
-# Utiliser une image de base officielle de Python
-FROM python:3.9-slim
+# Installe Python et pip
+RUN apt-get update && apt-get install -y python3 python3-pip
 
-# Installer les dépendances système nécessaires
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Définir le répertoire de travail
+# Crée le dossier de travail
 WORKDIR /app
 
-# Copier les fichiers de l'application dans le conteneur
-COPY . /app
+# Copie les fichiers de l'application
+COPY . .
 
-# Installer les dépendances Python
-RUN pip install --no-cache-dir -r requirements.txt
+# Installe les dépendances Python
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Exposer le port sur lequel l'application va s'exécuter
-EXPOSE 5000
-
-# Définir la commande de démarrage de l'application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+# Variables d'environnement Flask
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV PORT=10000
+EXPOSE $PORT
+# Commande de démarrage
+CMD ["flask", "run", "--port=10000"]
