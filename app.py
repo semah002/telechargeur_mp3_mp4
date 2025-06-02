@@ -53,7 +53,11 @@ def download():
                 'preferredquality': '192',
             }],
             'quiet': True,
-    }
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+
+            }
+        }
     else:  # format_type == 'mp4'
         ydl_opts = {
             'outtmpl': output_template,
@@ -64,6 +68,9 @@ def download():
                 'preferedformat': 'mp4',
             }],
             'quiet': True,
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+            }
         }
 
     
