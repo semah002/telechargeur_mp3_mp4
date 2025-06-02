@@ -3,3 +3,4 @@ yt-dlp>=2024.01.01
 gunicorn
 Jinja2
 Werkzeug
+requests
