@@ -1,21 +1,17 @@
-FROM jrottenberg/ffmpeg:4.4-ubuntu
+FROM tiangolo/uwsgi-nginx-flask:python3.11
 
-# Installe Python et pip
-RUN apt-get update && apt-get install -y python3 python3-pip
+# Installer ffmpeg via pip (avec image compatible)
+RUN pip install --no-cache-dir yt-dlp ffmpeg-python Flask
 
-# Crée le dossier de travail
+# Copier les fichiers de l'application
+COPY ./ /app
+
+# Définir le dossier de travail
 WORKDIR /app
 
-# Copie les fichiers de l'application
-COPY . .
-
-# Installe les dépendances Python
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Variables d'environnement Flask
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
+# Exposer le port utilisé par Flask
 ENV PORT=10000
 EXPOSE $PORT
-# Commande de démarrage
-CMD ["flask", "run", "--port=10000"]
+
+# Lancer l'application Flask
+CMD ["flask", "run", "--host=0.0.0.0", "--port=10000"]
