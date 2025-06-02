@@ -1,2 +1,5 @@
-flask
+Flask
 yt-dlp
+gunicorn
+Jinja2
+Werkzeug
