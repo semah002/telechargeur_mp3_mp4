@@ -1,0 +1,57 @@
+
+# Environnement Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Environnement virtuel
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+.env/
+
+# Fichiers de configuration
+*.env
+*.ini
+*.toml
+
+# Fichiers de logs
+*.log
+
+# Fichiers de base de données
+*.sqlite3
+
+# Fichiers de cache
+*.cache
+*.pyo
+*.pyd
+
+# Fichiers de test
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Fichiers de distribution
+dist/
+build/
+*.egg-info/
+
+# Fichiers de l'éditeur
+.vscode/
+.idea/
+*.swp
+
+# Fichiers spécifiques à Flask
+instance/
+*.db
+
+# Fichiers temporaires
+*.bak
+*.tmp
+
+# Fichiers de cookies
+cookies.txt
